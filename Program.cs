@@ -51,7 +51,7 @@
     /// <returns>True if the game is over</returns>
     static bool IsGameOver(List<string> board)
     {
-        return false;
+        return IsWinner(board, "x") || IsWinner(board, "o") || IsTie(board);
     }
 
     /// <summary>Determines if the provided player has a tic tac toe.</summary>
@@ -60,6 +60,30 @@
     /// <returns></returns>
     static bool IsWinner(List<string> board, string player)
     {
+        if (board[0] == player && board[1] == player && board[2] == player){
+            return true;
+        }
+        else if (board[3] == player && board[4] == player && board[5] == player){
+            return true;
+        }
+        else if (board[6] == player && board[7] == player && board[8] == player){
+            return true;
+        }
+        else if (board[2] == player && board[4] == player && board[6] == player){
+            return true;
+        } 
+        else if (board[0] == player && board[4] == player && board[8] == player){
+            return true;
+        }
+        else if (board[0] == player && board[3] == player && board[6] == player){
+            return true;
+        }
+        else if (board[1] == player && board[4] == player && board[7] == player){
+            return true;
+        }
+        else if (board[2] == player && board[5] == player && board[8] == player){
+            return true;
+        }
         return false;
     }
 
@@ -68,7 +92,16 @@
     /// <returns>True if the board is full.</returns>
     static bool IsTie(List<string> board)
     {
-        return false;
+        bool foundDigit = false;
+        foreach (string value in board)
+        {
+            if (char.IsDigit(value[0]))
+            {
+                foundDigit = true;
+                break;
+            }
+        }
+        return !foundDigit;
     }
 
     /// <summary>Cycles through the players (from x to o and o to x)</summary>
@@ -76,6 +109,9 @@
     /// <returns>The next players sign (x or o)</returns>
     static string GetNextPlayer(string currentPlayer)
     {
+        if (currentPlayer == "x") {
+            return "o";
+        } else 
         return "x";
     }
 
@@ -84,7 +120,10 @@
     /// <returns>A 1-based spot number (not a 0-based index)</returns>
     static int GetMoveChoice(string currentPlayer)
     {
-        return 1;
+       Console.Write($"{currentPlayer}'s turn to choose 1-9: ");
+            string? move_string = Console.ReadLine();
+            int choice = int.Parse(move_string!);
+            return choice;
     }
 
     /// <summary>
@@ -96,6 +135,9 @@
     /// <param name="currentPlayer">The current player's sign (x or o)</param>
     static void MakeMove(List<string> board, int choice, string currentPlayer)
     {
+        int index = choice - 1;
+        board[index] = currentPlayer;
+
 
     }
 }
